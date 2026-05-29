@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emotional Cognition Through Music — Research Paper</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Space+Mono:wght@400&display=swap');
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --bg: #ffffff;
+  --text: #111111;
+  --text-secondary: #444444;
+  --text-muted: #777777;
+  --accent: #2c5f8a;
+  --accent-light: rgba(44,95,138,.1);
+  --accent-border: rgba(44,95,138,.25);
+  --border: rgba(0,0,0,.1);
+  --card: #f7f8fa;
+}
+
+html{scroll-behavior:smooth}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'EB Garamond',Georgia,serif;
+  font-size:19px;
+  line-height:1.85;
+}
+
+/* HEADER */
+header{
+  max-width:760px;
+  margin:0 auto;
+  padding:5rem 2rem 4rem;
+  border-bottom:1px solid var(--border);
+}
+
+.journal-label{
+  font-family:'Space Mono',monospace;
+  font-size:9px;
+  letter-spacing:5px;
+  color:var(--accent);
+  text-transform:uppercase;
+  margin-bottom:2.5rem;
+  display:block;
+}
+
+h1{
+  font-size:clamp(26px,4.5vw,42px);
+  font-weight:400;
+  line-height:1.25;
+  margin-bottom:1rem;
+  color:var(--text);
+}
+
+.subtitle{
+  font-size:clamp(16px,2.5vw,20px);
+  font-style:italic;
+  color:var(--text-secondary);
+  margin-bottom:2.5rem;
+  line-height:1.5;
+}
+
+.author-block{
+  display:flex;
+  flex-direction:column;
+  gap:.3rem;
+  margin-bottom:2rem;
+}
+
+.author{
+  font-family:'Space Mono',monospace;
+  font-size:11px;
+  letter-spacing:2px;
+  color:var(--text);
+  font-weight:400;
+}
+
+.affiliation{
+  font-family:'Space Mono',monospace;
+  font-size:9px;
+  letter-spacing:1px;
+  color:var(--text-muted);
+}
+
+.meta-row{
+  font-family:'Space Mono',monospace;
+  font-size:9px;
+  letter-spacing:2px;
+  color:var(--text-muted);
+  text-transform:uppercase;
+  margin-bottom:.5rem;
+}
+
+.try-btn{
+  display:inline-block;
+  margin-top:2rem;
+  font-family:'Space Mono',monospace;
+  font-size:9px;
+  letter-spacing:4px;
+  text-transform:uppercase;
+  color:var(--accent);
+  border:.5px solid var(--accent);
+  padding:12px 28px;
+  text-decoration:none;
+  transition:all .4s ease;
+}
+
+.try-btn:hover{
+  background:var(--accent);
+  color:#ffffff;
+}
+
+/* MAIN */
+main{
+  max-width:760px;
+  margin:0 auto;
+  padding:4rem 2rem 6rem;
+}
+
+/* ABSTRACT */
+.abstract{
+  background:var(--card);
+  border-left:3px solid var(--accent);
+  padding:2rem 2.5rem;
+  margin-bottom:4rem;
+}
+
+.abstract-label{
+  font-family:'Space Mono',monospace;
+  font-size:8px;
+  letter-spacing:5px;
+  color:var(--accent);
+  text-transform:uppercase;
+  margin-bottom:1rem;
+  display:block;
+}
+
+.abstract p{
+  font-size:17px;
+  color:var(--text-secondary);
+  line-height:1.85;
+}
+
+/* KEYWORDS */
+.keywords{
+  margin-top:1.25rem;
+  font-family:'Space Mono',monospace;
+  font-size:8px;
+  letter-spacing:2px;
+  color:var(--text-muted);
+  text-transform:uppercase;
+}
+
+.keywords span{
+  color:var(--accent);
+  margin-right:.5rem;
+}
+
+/* SECTIONS */
+.section{
+  margin-bottom:3.5rem;
+}
+
+.section-num{
+  font-family:'Space Mono',monospace;
+  font-size:9px;
+  letter-spacing:3px;
+  color:var(--accent);
+  text-transform:uppercase;
+  margin-bottom:.6rem;
+  display:block;
+}
+
+h2{
+  font-size:clamp(20px,3vw,26px);
+  font-weight:400;
+  color:var(--text);
+  margin-bottom:1.5rem;
+  line-height:1.3;
+}
+
+h3{
+  font-size:18px;
+  font-weight:400;
+  color:var(--text-secondary);
+  margin-bottom:1rem;
+  margin-top:2rem;
+  font-style:italic;
+}
+
+p{
+  margin-bottom:1.25rem;
+  color:var(--text);
+}
+
+strong{
+  color:var(--text);
+  font-weight:600;
+}
+
+/* CITATION */
+cite{
+  font-family:'Space Mono',monospace;
+  font-size:10px;
+  color:var(--accent);
+  font-style:normal;
+  vertical-align:super;
+  margin-left:1px;
+}
+
+cite a{
+  color:var(--accent);
+  text-decoration:none;
+}
+
+cite a:hover{text-decoration:underline;}
+
+/* PULL QUOTE */
+blockquote{
+  border-left:3px solid var(--accent);
+  padding:1.5rem 2rem;
+  margin:2.5rem 0;
+  background:var(--card);
+}
+
+blockquote p{
+  font-size:clamp(17px,2.5vw,20px);
+  font-style:italic;
+  color:var(--text-secondary);
+  margin:0;
+}
+
+/* MAPPING TABLE */
+.mapping-table{
+  width:100%;
+  border-collapse:collapse;
+  margin:2rem 0;
+  font-size:15px;
+}
+
+.mapping-table th{
+  font-family:'Space Mono',monospace;
+  font-size:8px;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:var(--accent);
+  text-align:left;
+  padding:.85rem 1rem;
+  border-bottom:2px solid var(--accent-border);
+  background:var(--card);
+}
+
+.mapping-table td{
+  padding:.85rem 1rem;
+  border-bottom:1px solid var(--border);
+  color:var(--text);
+  vertical-align:top;
+  line-height:1.6;
+}
+
+.mapping-table tr:last-child td{border-bottom:none;}
+.mapping-table tr:hover td{background:var(--accent-light);}
+
+/* FIGURE */
+.figure{
+  background:var(--card);
+  border:1px solid var(--border);
+  padding:2rem;
+  margin:2.5rem 0;
+  text-align:center;
+}
+
+.figure-caption{
+  font-family:'Space Mono',monospace;
+  font-size:9px;
+  letter-spacing:2px;
+  color:var(--text-muted);
+  text-transform:uppercase;
+  margin-top:1rem;
+}
+
+.pipeline{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:.5rem;
+}
+
+.pipe-step{
+  background:var(--accent-light);
+  border:1px solid var(--accent-border);
+  padding:.6rem 1rem;
+  font-family:'Space Mono',monospace;
+  font-size:9px;
+  letter-spacing:2px;
+  color:var(--accent);
+  text-transform:uppercase;
+}
+
+.pipe-arrow{
+  color:var(--text-muted);
+  font-size:14px;
+  padding:0 .25rem;
+}
+
+/* PHASE CARDS */
+.phase-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1rem;
+  margin:2rem 0;
+}
+
+@media(max-width:600px){.phase-grid{grid-template-columns:1fr}}
+
+.phase-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-top:3px solid var(--accent);
+  padding:1.25rem 1.5rem;
+}
+
+.phase-time{
+  font-family:'Space Mono',monospace;
+  font-size:8px;
+  letter-spacing:3px;
+  color:var(--accent);
+  text-transform:uppercase;
+  margin-bottom:.4rem;
+  display:block;
+}
+
+.phase-name{
+  font-size:17px;
+  font-style:italic;
+  color:var(--text);
+  margin-bottom:.5rem;
+  display:block;
+  font-weight:500;
+}
+
+.phase-desc{
+  font-size:14px;
+  color:var(--text-secondary);
+  line-height:1.65;
+}
+
+/* REFERENCES */
+.references{
+  margin-top:4rem;
+  padding-top:3rem;
+  border-top:1px solid var(--border);
+}
+
+.ref-item{
+  display:flex;
+  gap:1.5rem;
+  margin-bottom:1.25rem;
+  font-size:15px;
+  color:var(--text-secondary);
+  line-height:1.6;
+}
+
+.ref-num{
+  font-family:'Space Mono',monospace;
+  font-size:9px;
+  color:var(--accent);
+  min-width:24px;
+  padding-top:2px;
+}
+
+/* FOOTER */
+footer{
+  border-top:1px solid var(--border);
+  padding:3rem 2rem;
+  text-align:center;
+  font-family:'Space Mono',monospace;
+  font-size:9px;
+  letter-spacing:2px;
+  color:var(--text-muted);
+  text-transform:uppercase;
+}
+
+footer a{
+  color:var(--accent);
+  text-decoration:none;
+}
+
+/* Divider */
+.divider{
+  border:none;
+  border-top:1px solid var(--border);
+  margin:3rem 0;
+}
+
+/* Highlight */
+.highlight{
+  color:var(--accent);
+  font-style:italic;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <span class="journal-label">Independent Research · Creative Technology · 2025</span>
+
+  <h1>Emotional Cognition Through Music:<br>A Real-Time Synesthetic Experience System for Personal Memory and AI-Driven Visual Perception</h1>
+
+  <p class="subtitle">Exploring how music reshapes the emotional interpretation of memory through pitch-to-colour mapping, energy-driven motion, and timbral texture — grounded in neuroscience and synesthesia research</p>
+
+  <div class="author-block">
+    <span class="author">Abhishek Kapoor</span>
+    <span class="affiliation">Independent Researcher · Creative Technologist · Post-Production Specialist</span>
+    <span class="affiliation">kapoor10abhishek@gmail.com</span>
+  </div>
+
+  <div class="meta-row">Submitted · May 2025</div>
+  <div class="meta-row">Keywords · Music Visualisation · Synesthesia · Emotional Cognition · AI · Memory</div>
+
+  <a class="try-btn" href="index.html" target="_blank">→ Open the Experience</a>
+</header>
+
+<main>
+
+  <!-- ABSTRACT -->
+  <div class="abstract">
+    <span class="abstract-label">Abstract</span>
+    <p>This paper presents <em>What Music Actually Does to You</em> — an interactive AI-native experience that visualises the real-time emotional and cognitive effects of music on human memory and perception. Drawing on established research in music visualisation, synesthesia, and emotional cognition <cite><a href="#ref1">[1]</a></cite>, the system analyses a user-uploaded song in real time using the Web Audio API, mapping pitch to colour, energy to motion, and timbre to visual texture — directly following the mapping framework established by musicolors <cite><a href="#ref1">[1]</a></cite>. A user-uploaded photograph serves as the emotional anchor — initially rendered in monochrome to represent dormant memory — and gradually transforms in colour as the music's emotional arc progresses. The project argues that music does not simply trigger memory; it fundamentally reshapes how memory <em>emotionally feels</em>. The system was inspired by a personal experience of listening to <em>The Shadowy Light</em> by Gorillaz featuring Asha Bhosle — a song about acceptance of death — which consistently produces a state of profound stillness and emotional clarity in the author. The outcome is an accessible, browser-based tool that makes the internal experience of music emotionally and visually legible for any user with a photograph and a song.</p>
+    <div class="keywords">
+      <span>Keywords:</span>
+      music visualisation · synesthesia · emotional cognition · memory · Web Audio API · AI · colour psychology · personal narrative
+    </div>
+  </div>
+
+  <!-- 1. INTRODUCTION -->
+  <div class="section">
+    <span class="section-num">01</span>
+    <h2>Introduction</h2>
+
+    <p>There is a song by Asha Bhosle about what comes after death. It is the last song she recorded. She sings about the other side not with fear but with curiosity — with the peaceful openness of someone who has lived fully and looks at what comes next without resistance. When the author listens to it, something unusual happens: complete stillness. No thoughts. No imagining. Just the voice and silence around it. For a moment, relief from the pain of the world.</p>
+
+    <p>This personal experience became the foundation of a research question: <span class="highlight">why do certain songs make difficult emotional truths feel not just bearable, but beautiful?</span> And further — what is actually happening inside the human mind and body when this occurs?</p>
+
+    <p>Music visualisation has traditionally served analysis, education, and therapy <cite><a href="#ref1">[1]</a></cite>. More recently, its role in emotional appreciation and synesthetic experience has become increasingly significant <cite><a href="#ref1">[1]</a></cite>. Research in the field has demonstrated that combining music with dynamic visuals offers users a unique sensory experience — one that changes not just how music is perceived, but how the memories emotionally connected to it are experienced <cite><a href="#ref1">[1]</a></cite>.</p>
+
+    <p>The neuroscience literature on music and memory is equally compelling. Studies in dopamine response to music show that the brain begins releasing dopamine <em>before</em> the emotional peak of a song arrives — in anticipation of beauty <cite><a href="#ref2">[2]</a></cite>. Frisson — the physiological response of goosebumps to music — has been measured as a distinct and reproducible phenomenon tied to specific musical structures <cite><a href="#ref3">[3]</a></cite>. And critically, research on autobiographical memory and music demonstrates that songs become emotionally encoded alongside specific memories — and that replaying the song does not merely trigger the memory but actively reshapes its emotional character <cite><a href="#ref4">[4]</a></cite>.</p>
+
+    <p>This project sits at the intersection of all of these research traditions. It is not a music player. It is not a visualiser in the traditional sense. It is an <span class="highlight">emotional cognition system</span> — a tool that makes the internal experience of music visually legible, using real-time audio analysis grounded in synesthesia research.</p>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 2. RELATED WORK -->
+  <div class="section">
+    <span class="section-num">02</span>
+    <h2>Related Work</h2>
+
+    <h3>2.1 Music Visualisation and Synesthesia</h3>
+
+    <p>Extensive research has explored the integration of music with visualisation systems, focusing on rhythm, melody, tempo, and emotional representation <cite><a href="#ref1">[1]</a></cite>. Most existing systems, however, have been designed for performance contexts or music analysis — requiring specialised hardware or software, and targeting artists and performers rather than general listeners <cite><a href="#ref1">[1]</a></cite>.</p>
+
+    <p>The musicolors system developed by Lee and Hong <cite><a href="#ref1">[1]</a></cite> represents the most directly relevant prior work. musicolors is a real-time web-based music visualisation library that maps three core musical properties to visual elements: pitch to colour, energy to size, and timbre to texture. A qualitative user study with composers, developers, and listeners demonstrated that the system evoked genuine synesthetic experiences — with participants reporting that music felt "more alive" and that the visualisation enabled them to "see" sounds they had previously only heard <cite><a href="#ref1">[1]</a></cite>.</p>
+
+    <blockquote>
+      <p>"The visualization expanding and contracting in sync with the repetitive drum sounds was quite eye-opening. I think I could see the drum sounds and the bass line of the music better when I listened to the music with musicolors." — Participant P6 <cite><a href="#ref1">[1]</a></cite></p>
+    </blockquote>
+
+    <p>This project builds directly on the musicolors mapping framework, implementing pitch-to-colour, energy-to-motion, and timbre-to-texture relationships in a browser-based system using the Web Audio API — with the key extension of adding a personal photographic anchor and a narrative emotional arc.</p>
+
+    <h3>2.2 Music, Memory, and Emotional Perception</h3>
+
+    <p>The relationship between music and autobiographical memory is well established in the psychological literature. Music functions as what researchers term an "emotional time machine" — reactivating not just the content of memories but their emotional character <cite><a href="#ref4">[4]</a></cite>. This reactivation is not passive; music actively reshapes the emotional valence of the memories it triggers.</p>
+
+    <p>Research on dopamine and musical anticipation demonstrates that the brain's reward system activates before the emotional peak of a musical passage, in response to the predicted pleasure of what is coming <cite><a href="#ref2">[2]</a></cite>. This anticipatory pleasure response explains the phenomenon of being moved by music even before its most emotionally intense moment arrives.</p>
+
+    <p>Neuroimaging studies have confirmed that music processing engages both the auditory cortex and the limbic system simultaneously — meaning that music is processed emotionally and cognitively at the same time <cite><a href="#ref5">[5]</a></cite>. This dual processing is what gives music its unique power to transform emotional states: it bypasses purely rational processing and directly engages the structures responsible for emotion and memory.</p>
+
+    <h3>2.3 Colour Psychology and Emotional Mapping</h3>
+
+    <p>The relationship between colour and emotional state is documented across psychology and neuroscience. Cool blues are consistently associated with contemplation, emotional distance, and existential reflection. Warm ambers and golds with nostalgia, inherited warmth, and recognition. The specific colour-emotion mappings used in this system draw on this established literature as well as the pitch-colour synesthesia research cited by musicolors <cite><a href="#ref1">[1]</a></cite>.</p>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 3. CONCEPT -->
+  <div class="section">
+    <span class="section-num">03</span>
+    <h2>Concept and Design Philosophy</h2>
+
+    <p>The central claim of this project is that music does not simply remind us of memories. It changes how those memories <em>emotionally feel</em>. A photograph of a person you have lost looks different — carries a different emotional weight — when listened to in silence versus when The Shadowy Light is playing.</p>
+
+    <p>The system was designed around three design principles derived from both the research literature and the author's personal experience:</p>
+
+    <p><strong>1. Restraint over spectacle.</strong> Most AI creative work focuses on visual overload, hyper-editing, and generation quality <cite><a href="#ref1">[1]</a></cite>. This system instead prioritises emotional realism, cinematic pacing, and subconscious experience. The visuals should feel discovered, not imposed.</p>
+
+    <p><strong>2. The photograph as emotional anchor.</strong> Rather than generating abstract visuals, the system uses a photograph uploaded by the user — their own memory, their own image — as the visual foundation. The music then transforms this image. This grounds the experience in something real and personal rather than aesthetically generated.</p>
+
+    <p><strong>3. No dictated emotion.</strong> The system does not tell users what to feel. It creates conditions for feeling and then gets out of the way. The emotional response is entirely the user's own. This design decision was influenced by the musicolors finding that users sought a visual medium to "express something melancholic that is difficult to express in words" <cite><a href="#ref1">[1]</a></cite> — implying that the visualisation should serve as a space of personal interpretation, not directed experience.</p>
+
+    <blockquote>
+      <p>"I think we could use these visualizations to express something melancholic that is difficult to express in words." — Participant P5 <cite><a href="#ref1">[1]</a></cite></p>
+    </blockquote>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 4. SYSTEM DESIGN -->
+  <div class="section">
+    <span class="section-num">04</span>
+    <h2>System Design and Implementation</h2>
+
+    <h3>4.1 Technical Architecture</h3>
+
+    <p>The system is implemented as a single-file browser application using HTML5, CSS3, and vanilla JavaScript. It requires no backend server, no external dependencies beyond Google Fonts, and runs entirely in the browser. This accessibility-first approach aligns with the musicolors design principle of making music visualisation available to anyone without specialised hardware or software <cite><a href="#ref1">[1]</a></cite>.</p>
+
+    <div class="figure">
+      <div class="pipeline">
+        <div class="pipe-step">User photograph</div>
+        <span class="pipe-arrow">→</span>
+        <div class="pipe-step">Greyscale render</div>
+        <span class="pipe-arrow">→</span>
+        <div class="pipe-step">Web Audio analysis</div>
+        <span class="pipe-arrow">→</span>
+        <div class="pipe-step">Visual mapping</div>
+        <span class="pipe-arrow">→</span>
+        <div class="pipe-step">Emotional output</div>
+      </div>
+      <div class="figure-caption">Figure 1 · System pipeline from user input to emotional visual output</div>
+    </div>
+
+    <p>Audio analysis is performed using the Web Audio API's AnalyserNode, which provides real-time access to frequency domain data (via getByteFrequencyData) and time domain data (via getByteTimeDomainData). This enables frame-by-frame extraction of the three core musical properties used in the mapping system.</p>
+
+    <h3>4.2 The Mapping System</h3>
+
+    <p>Following the framework established by musicolors <cite><a href="#ref1">[1]</a></cite>, three musical properties are extracted in real time and mapped to visual elements:</p>
+
+    <table class="mapping-table">
+      <thead>
+        <tr>
+          <th>Musical Property</th>
+          <th>Analysis Method</th>
+          <th>Visual Element</th>
+          <th>Emotional Meaning</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Pitch</td>
+          <td>Dominant frequency bin from FFT data</td>
+          <td>Colour hue — low pitch = deep blue, high pitch = warm amber/gold</td>
+          <td>Contemplation → recognition → warmth</td>
+        </tr>
+        <tr>
+          <td>Energy</td>
+          <td>RMS of frequency data</td>
+          <td>Neural network pulse speed, node size, colour intensity, connection thickness</td>
+          <td>Emotional activation — quiet to loud = dormant to alive</td>
+        </tr>
+        <tr>
+          <td>Timbre</td>
+          <td>Spectral centroid (brightness)</td>
+          <td>Colour wash spread — bright timbre = wider colour diffusion across image</td>
+          <td>Texture of feeling — sharp sounds spread colour further</td>
+        </tr>
+        <tr>
+          <td>Memory</td>
+          <td>Accumulated progress + energy influence</td>
+          <td>Background emotional intensity, data readout</td>
+          <td>Emotional reactivation building over time</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>The colour-emotion mappings draw on colour psychology research and the pitch-colour synesthesia literature cited by Lee and Hong <cite><a href="#ref1">[1]</a></cite>. Deep blue corresponds to contemplation and existential reflection. Warm amber to nostalgia and inherited emotional warmth. Gold to recognition and connection. The transitions between these states follow the musical arc of the song rather than a fixed timer.</p>
+
+    <h3>4.3 The Photograph Layer</h3>
+
+    <p>The user-uploaded photograph is rendered in greyscale at the start of the experience. This represents what the system terms "emotional dormancy" — memory in its archived, suspended state before music activates it. As the song progresses and emotional processing builds, colour gradually bleeds into the image — mapped to the specific emotional properties of the music at that moment.</p>
+
+    <p>The choice to use a real photograph rather than generated imagery is intentional and significant. It grounds the experience in personal reality. The system is not creating something fictional — it is revealing something true about the relationship between a specific song and a specific memory that belongs entirely to the user.</p>
+
+    <h3>4.4 The Neural Overlay</h3>
+
+    <p>A network of nodes and connections overlaid on the image represents the neural activity of emotional processing. Node pulse speed, size, and connection distance are all driven by real-time audio analysis — energy drives pulse intensity, pitch influences connection reach. At key moments in the emotional arc, detection boxes appear over the image, referencing the visual language of cognitive science and AI perception systems.</p>
+
+    <p>This overlay is designed to make the normally invisible process of emotional cognition visually present — not as a scientific diagram, but as a felt sensation of something being understood.</p>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 5. EMOTIONAL ARC -->
+  <div class="section">
+    <span class="section-num">05</span>
+    <h2>The Emotional Arc — Six Phases of Cognition</h2>
+
+    <p>The experience is structured in six phases, each corresponding to a distinct stage of emotional and cognitive processing. These phases are informed by the neuroscience literature on music perception and emotional memory <cite><a href="#ref2">[2]</a>,<a href="#ref4">[4]</a>,<a href="#ref5">[5]</a></cite>.</p>
+
+    <div class="phase-grid">
+      <div class="phase-card">
+        <span class="phase-time">Phase 1 · 0–6%</span>
+        <span class="phase-name">Observation</span>
+        <p class="phase-desc">The brain observes without emotional activation. The photograph sits in monochrome stillness. No colour. No analysis. Just presence.</p>
+      </div>
+      <div class="phase-card">
+        <span class="phase-time">Phase 2 · 6–20%</span>
+        <span class="phase-name">Detection · Memory</span>
+        <p class="phase-desc">The hippocampus begins cross-referencing the image with stored emotional signatures. High-frequency sounds activate the amygdala first. First colour begins.</p>
+      </div>
+      <div class="phase-card">
+        <span class="phase-time">Phase 3 · 20–36%</span>
+        <span class="phase-name">Activation · Feeling</span>
+        <p class="phase-desc">Dopamine releases before the emotional peak arrives. The brain anticipates beauty. Pitch variations directly modulate this response. Colour deepens.</p>
+      </div>
+      <div class="phase-card">
+        <span class="phase-time">Phase 4 · 36–52%</span>
+        <span class="phase-name">Reconstruction · Recognition</span>
+        <p class="phase-desc">Music changes not just what you remember but how the memory emotionally feels. Energy levels reshape the emotional weight of the image. Full colour.</p>
+      </div>
+      <div class="phase-card">
+        <span class="phase-time">Phase 5 · 52–70%</span>
+        <span class="phase-name">Resonance · Acceptance</span>
+        <p class="phase-desc">The amygdala and prefrontal cortex synchronise. Timbral warmth — the texture of the voice — dissolves fear around loss. Peak emotional state.</p>
+      </div>
+      <div class="phase-card">
+        <span class="phase-time">Phase 6 · 70–100%</span>
+        <span class="phase-name">Dissolution · Stillness</span>
+        <p class="phase-desc">Emotional processing slows. The auditory cortex quiets. Colour fades. What remains is pure presence — the image and the silence between notes.</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 6. PERSONAL FOUNDATION -->
+  <div class="section">
+    <span class="section-num">06</span>
+    <h2>Personal Foundation — Why This Was Made</h2>
+
+    <p>This project would not exist without a specific song and a specific person.</p>
+
+    <p>The song is <em>The Shadowy Light</em> by Gorillaz, featuring Asha Bhosle. It is the last song she recorded — a meditation on death, the other side, and acceptance. When the author listens to it, something unusual occurs: complete stillness. Not sadness. Not nostalgia. Just a profound, temporary relief from the noise of being alive.</p>
+
+    <p>The person is the author's grandmother, who died in recent years. She too approached death with unusual openness — speaking about it clearly and without fear during her final stages, at a time when most people choose silence. There was something in her acceptance that the author recognised later in Asha Bhosle's voice. A shared understanding of impermanence that somehow made impermanence feel less frightening.</p>
+
+    <p>The research question that emerged from this personal experience is not sentimental. It is genuinely scientific: <span class="highlight">what is the neurological mechanism by which a song can make a difficult emotional truth feel not just bearable, but peaceful?</span></p>
+
+    <p>The answer, according to the literature, lies in the simultaneous engagement of the auditory cortex and limbic system during music listening <cite><a href="#ref5">[5]</a></cite>, the anticipatory dopamine release that precedes emotional peaks <cite><a href="#ref2">[2]</a></cite>, and the capacity of music to access autobiographical memory and reshape its emotional character <cite><a href="#ref4">[4]</a></cite>. The system built here attempts to make this invisible process visible — not to explain it, but to let it be experienced.</p>
+
+    <blockquote>
+      <p>The system does not tell you what to feel. It creates conditions for feeling, and then gets out of the way.</p>
+    </blockquote>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 7. OUTCOMES -->
+  <div class="section">
+    <span class="section-num">07</span>
+    <h2>Outcomes and Implications</h2>
+
+    <h3>7.1 What the System Demonstrates</h3>
+
+    <p>The system demonstrates that a real-time music cognition visualiser can be built as a browser-accessible tool with no backend infrastructure — making it available to any user with a photograph, a song, and a browser. This aligns with the musicolors finding that accessibility is critical for music visualisation to become part of daily experience rather than specialist performance <cite><a href="#ref1">[1]</a></cite>.</p>
+
+    <p>The use of real audio analysis — rather than a timer or pre-programmed animation — means that the visual output is genuinely unique to each song. The experience of The Shadowy Light will look fundamentally different from the experience of a jazz piece or an electronic track, because the pitch, energy, and timbre profiles are entirely different. This is not a visualiser with a fixed aesthetic. It is a genuine real-time reading of what the music is doing.</p>
+
+    <h3>7.2 The Gap This Fills</h3>
+
+    <p>Lee and Hong identify a clear gap in the music visualisation literature: most systems are designed for performance or analysis, not for personal emotional appreciation <cite><a href="#ref1">[1]</a></cite>. Participants in their user study expressed a desire to use visualisation to "share their personal music experiences" and to "express something melancholic that is difficult to express in words" <cite><a href="#ref1">[1]</a></cite>.</p>
+
+    <p>This system directly addresses that gap. It is not for performance. It is not for analysis. It is for the private, personal experience of sitting with a song and a memory — and having the internal experience of that moment made visible.</p>
+
+    <h3>7.3 Implications for Creative Technology</h3>
+
+    <p>The project argues that AI and creative technology are most powerful not when they generate something from nothing, but when they make something real — a memory, a feeling, a relationship between a person and a song — emotionally legible in new ways. The photograph is real. The song is real. The emotional response is real. The technology simply creates the conditions for that reality to be seen.</p>
+
+    <p>This is a fundamentally different relationship with AI tools than the dominant narrative of generation and spectacle. It is AI as emotional instrument — quiet, precise, in service of human experience rather than replacing it.</p>
+  </div>
+
+  <hr class="divider">
+
+  <!-- 8. CONCLUSION -->
+  <div class="section">
+    <span class="section-num">08</span>
+    <h2>Conclusion</h2>
+
+    <p>This paper has presented <em>What Music Actually Does to You</em> — an interactive browser-based system that visualises the real-time emotional cognition effects of music on personal memory. Drawing on the musicolors mapping framework <cite><a href="#ref1">[1]</a></cite> and the broader neuroscience literature on music, memory, and emotional perception <cite><a href="#ref2">[2]</a>,<a href="#ref3">[3]</a>,<a href="#ref4">[4]</a>,<a href="#ref5">[5]</a></cite>, the system maps pitch to colour, energy to motion, and timbre to texture in real time — transforming a user's personal photograph as their song plays.</p>
+
+    <p>The system was motivated by a deeply personal experience: a song about acceptance of death that consistently produces a state of profound stillness in the author, and its connection to a grandmother who approached her own death with unusual peace and openness. The research question it asks — why do certain songs make difficult emotional truths feel beautiful? — is answered not through explanation but through direct experience.</p>
+
+    <p>Maybe peace is audible. This system is an attempt to let you see what that sounds like.</p>
+
+    <a class="try-btn" href="index.html" target="_blank">→ Experience it yourself</a>
+  </div>
+
+  <!-- REFERENCES -->
+  <div class="references">
+    <span class="section-num">References</span>
+    <h2>References</h2>
+
+    <div class="ref-item" id="ref1">
+      <span class="ref-num">[1]</span>
+      <span>Lee, C., & Hong, J. (2025). <em>musicolors: Bridging Sound and Visuals For Synesthetic Creative Musical Experience.</em> Gwangju Institute of Science and Technology. arXiv:2503.14220v1 [cs.HC].</span>
+    </div>
+
+    <div class="ref-item" id="ref2">
+      <span class="ref-num">[2]</span>
+      <span>Salimpoor, V. N., Benovoy, M., Larcher, K., Dagher, A., & Zatorre, R. J. (2011). <em>Anatomically distinct dopamine release during anticipation and experience of peak emotion to music.</em> Nature Neuroscience, 14(2), 257–262.</span>
+    </div>
+
+    <div class="ref-item" id="ref3">
+      <span class="ref-num">[3]</span>
+      <span>Panksepp, J. (1995). <em>The emotional sources of "chills" induced by music.</em> Music Perception, 13(2), 171–207.</span>
+    </div>
+
+    <div class="ref-item" id="ref4">
+      <span class="ref-num">[4]</span>
+      <span>Janata, P., Tomic, S. T., & Rakowski, S. K. (2007). <em>Characterisation of music-evoked autobiographical memories.</em> Memory, 15(8), 845–860.</span>
+    </div>
+
+    <div class="ref-item" id="ref5">
+      <span class="ref-num">[5]</span>
+      <span>Koelsch, S. (2014). <em>Brain correlates of music-evoked emotions.</em> Nature Reviews Neuroscience, 15(3), 170–180.</span>
+    </div>
+
+  </div>
+
+</main>
+
+<footer>
+  <p>What Music Actually Does to You · Abhishek Kapoor · 2025</p>
+  <p style="margin-top:.5rem"><a href="index.html">→ Open the experience</a></p>
+</footer>
+
+</body>
+</html>
