@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What Music Actually Does to You</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Space+Mono:wght@400&display=swap');
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--black:#060606;--white:#f0ece4;--amber:#c8821a;--amber2:#e8a030}
+html,body{width:100%;height:100%;background:var(--black);color:var(--white);font-family:'EB Garamond',Georgia,serif;overflow:hidden}
+
+/* ENTRY */
+#entry{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:100;background:var(--black);transition:opacity 2.5s ease;padding:2rem;overflow-y:auto}
+#entry.fade-out{opacity:0;pointer-events:none}
+.e-label{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:6px;color:var(--amber);text-transform:uppercase;margin-bottom:2rem;opacity:0;animation:fu 1s ease .4s forwards}
+.e-title{font-size:clamp(22px,4vw,44px);font-weight:400;text-align:center;line-height:1.3;margin-bottom:.6rem;max-width:560px;opacity:0;animation:fu 1s ease .7s forwards}
+.e-sub{font-size:14px;font-style:italic;color:rgba(240,236,228,.3);text-align:center;margin-bottom:2.5rem;opacity:0;animation:fu 1s ease 1s forwards}
+.upload-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;width:100%;max-width:500px;margin-bottom:1.5rem;opacity:0;animation:fu 1s ease 1.3s forwards}
+.uzone{border:.5px solid rgba(240,236,228,.15);padding:1.5rem 1rem;text-align:center;cursor:pointer;transition:all .4s ease;position:relative;overflow:hidden}
+.uzone:hover{border-color:rgba(240,236,228,.4);background:rgba(240,236,228,.03)}
+.uzone.filled{border-color:var(--amber)}
+.uzone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.u-icon{font-size:22px;margin-bottom:.5rem;display:block;opacity:.35}
+.u-label{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:4px;text-transform:uppercase;color:rgba(240,236,228,.3);display:block;margin-bottom:.3rem}
+.u-hint{font-size:11px;font-style:italic;color:rgba(240,236,228,.18)}
+.u-name{font-size:10px;color:var(--amber);margin-top:.4rem;display:none;word-break:break-all}
+.or-row{width:100%;max-width:500px;display:flex;align-items:center;gap:1rem;margin-bottom:1rem;opacity:0;animation:fu 1s ease 1.5s forwards}
+.or-row::before,.or-row::after{content:'';flex:1;height:.5px;background:rgba(240,236,228,.07)}
+.or-row span{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:3px;color:rgba(240,236,228,.18);text-transform:uppercase;white-space:nowrap}
+.url-row{width:100%;max-width:500px;display:flex;gap:.75rem;margin-bottom:2rem;opacity:0;animation:fu 1s ease 1.6s forwards}
+.url-inp{flex:1;background:transparent;border:.5px solid rgba(240,236,228,.12);color:var(--white);font-family:'Space Mono',monospace;font-size:9px;padding:.8rem .9rem;outline:none;transition:border-color .3s}
+.url-inp::placeholder{color:rgba(240,236,228,.12)}
+.url-inp:focus{border-color:rgba(240,236,228,.3)}
+.url-inp.valid{border-color:var(--amber);color:var(--amber)}
+.url-btn{background:transparent;border:.5px solid rgba(240,236,228,.12);color:rgba(240,236,228,.3);font-family:'Space Mono',monospace;font-size:8px;letter-spacing:3px;text-transform:uppercase;padding:0 1rem;cursor:pointer;transition:all .3s;white-space:nowrap}
+.url-btn:hover{border-color:var(--amber);color:var(--amber)}
+.begin-btn{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:5px;text-transform:uppercase;background:transparent;border:.5px solid rgba(240,236,228,.2);color:rgba(240,236,228,.4);padding:15px 44px;cursor:pointer;transition:all .6s;opacity:0;animation:fu 1s ease 1.9s forwards}
+.begin-btn:hover:not(:disabled){border-color:var(--white);color:var(--white)}
+.begin-btn:disabled{cursor:not-allowed;opacity:.2!important}
+.begin-btn.ready{border-color:var(--amber);color:var(--amber)}
+
+/* EXPERIENCE */
+#exp{position:fixed;inset:0;opacity:0;pointer-events:none;transition:opacity 2s ease}
+#exp.active{opacity:1;pointer-events:all}
+#imgC{position:absolute;inset:0;width:100%;height:100%}
+#ovC{position:absolute;inset:0;width:100%;height:100%}
+#colC{position:absolute;inset:0;width:100%;height:100%;mix-blend-mode:color;opacity:0}
+#neuC{position:absolute;inset:0;width:100%;height:100%;mix-blend-mode:screen}
+
+/* Corners */
+.corner{position:absolute;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;color:rgba(240,236,228,.3);text-transform:uppercase;line-height:1.9}
+#ctl{top:1.5rem;left:1.5rem}
+#ctr{top:1.5rem;right:1.5rem;text-align:right}
+#cbl{bottom:1.5rem;left:1.5rem}
+#cbr{bottom:1.5rem;right:1.5rem;text-align:right}
+
+/* Centre word */
+.centre{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none;width:85%}
+#pWord{font-size:clamp(44px,8vw,88px);font-weight:400;color:var(--white);opacity:0;transition:opacity 2.5s ease;letter-spacing:3px;text-shadow:0 0 80px rgba(200,130,26,.25)}
+#pWord.on{opacity:.9}
+
+/* Science text — large and readable */
+#pSci{
+  font-size:clamp(16px,2.2vw,22px);
+  font-style:italic;
+  color:rgba(240,236,228,.75);
+  margin-top:1.5rem;
+  max-width:560px;
+  line-height:1.75;
+  opacity:0;
+  transition:opacity 2.5s ease;
+  margin-left:auto;
+  margin-right:auto;
+  text-shadow:0 2px 12px rgba(0,0,0,.8);
+}
+#pSci.on{opacity:1}
+
+/* Audio metrics panel */
+#metrics{
+  position:absolute;
+  left:1.5rem;
+  top:50%;
+  transform:translateY(-50%);
+  font-family:'Space Mono',monospace;
+  font-size:9px;
+  letter-spacing:2px;
+  color:rgba(200,130,26,.6);
+  text-transform:uppercase;
+  line-height:1;
+  opacity:0;
+  transition:opacity 2s ease;
+}
+#metrics.on{opacity:1}
+.met-row{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.met-label{width:60px;text-align:right;font-size:8px;color:rgba(200,130,26,.45)}
+.met-bar{width:80px;height:2px;background:rgba(200,130,26,.12);position:relative;overflow:hidden}
+.met-fill{position:absolute;left:0;top:0;height:100%;background:var(--amber);transition:width .1s ease}
+.met-val{font-size:8px;color:rgba(200,130,26,.45);width:32px}
+
+/* Progress */
+#prog{position:absolute;bottom:0;left:0;height:1px;background:rgba(200,130,26,.4);width:0%;transition:width .3s linear}
+
+/* Grain */
+#grain{position:fixed;inset:0;pointer-events:none;z-index:999;opacity:.04;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* End */
+#endScr{position:fixed;inset:0;background:var(--black);display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 3s ease;z-index:200;padding:2rem;text-align:center}
+#endScr.on{opacity:1;pointer-events:all}
+.end-main{font-size:clamp(18px,3vw,28px);font-style:italic;color:rgba(240,236,228,.55);line-height:2.4;margin-bottom:3rem}
+.end-credit{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:3px;color:rgba(240,236,228,.12);text-transform:uppercase;margin-bottom:2.5rem}
+.restart{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:4px;text-transform:uppercase;background:transparent;border:none;color:rgba(240,236,228,.18);cursor:pointer;transition:color .4s;padding:.5rem}
+.restart:hover{color:rgba(240,236,228,.5)}
+
+/* Scan */
+.scan{position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(200,130,26,.06),transparent);animation:sc 12s linear infinite;pointer-events:none}
+@keyframes sc{from{top:0}to{top:100%}}
+@keyframes fu{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<div id="grain"></div>
+
+<!-- ENTRY -->
+<div id="entry">
+  <div class="e-label">An emotional cognition system</div>
+  <h1 class="e-title">What Music Actually Does to You</h1>
+  <p class="e-sub">Upload a photograph and a song. Then let go.</p>
+  <div class="upload-grid">
+    <div class="uzone" id="imgZone">
+      <input type="file" id="imgInp" accept="image/*">
+      <span class="u-icon">◻</span>
+      <span class="u-label">A photograph</span>
+      <span class="u-hint">any image</span>
+      <span class="u-name" id="imgName"></span>
+    </div>
+    <div class="uzone" id="audioZone">
+      <input type="file" id="audioInp" accept="audio/*">
+      <span class="u-icon">◈</span>
+      <span class="u-label">A song</span>
+      <span class="u-hint">mp3 · wav · m4a</span>
+      <span class="u-name" id="audioName"></span>
+    </div>
+  </div>
+  <div class="or-row"><span>or paste a direct audio url</span></div>
+  <div class="url-row">
+    <input class="url-inp" id="audioUrl" type="url" placeholder="https://  ·  direct mp3 link">
+    <button class="url-btn" id="urlBtn">load</button>
+  </div>
+  <button class="begin-btn" id="beginBtn" disabled>begin</button>
+</div>
+
+<!-- EXPERIENCE -->
+<div id="exp">
+  <canvas id="imgC"></canvas>
+  <canvas id="ovC"></canvas>
+  <canvas id="colC"></canvas>
+  <canvas id="neuC"></canvas>
+  <div class="scan"></div>
+
+  <div class="corner" id="ctl">emotional cognition system<br><span id="phaseDisp" style="color:rgba(200,130,26,.5)">observation</span></div>
+  <div class="corner" id="ctr"><span id="timeDisp">00:00</span></div>
+  <div class="corner" id="cbl">what music actually does to you</div>
+  <div class="corner" id="cbr">based on musicolors research · 2025</div>
+
+  <div class="centre">
+    <div id="pWord"></div>
+    <div id="pSci"></div>
+  </div>
+
+  <!-- Real audio metrics -->
+  <div id="metrics">
+    <div class="met-row">
+      <span class="met-label">pitch</span>
+      <div class="met-bar"><div class="met-fill" id="mPitch"></div></div>
+      <span class="met-val" id="vPitch">—</span>
+    </div>
+    <div class="met-row">
+      <span class="met-label">energy</span>
+      <div class="met-bar"><div class="met-fill" id="mEnergy"></div></div>
+      <span class="met-val" id="vEnergy">—</span>
+    </div>
+    <div class="met-row">
+      <span class="met-label">timbre</span>
+      <div class="met-bar"><div class="met-fill" id="mTimbre"></div></div>
+      <span class="met-val" id="vTimbre">—</span>
+    </div>
+    <div class="met-row">
+      <span class="met-label">memory</span>
+      <div class="met-bar"><div class="met-fill" id="mMemory"></div></div>
+      <span class="met-val" id="vMemory">—</span>
+    </div>
+  </div>
+
+  <div id="prog"></div>
+</div>
+
+<!-- END -->
+<div id="endScr">
+  <div class="end-main">maybe peace is audible.</div>
+  <div class="end-credit">what music actually does to you · 2025<br>inspired by musicolors research · lee & hong · 2025</div>
+  <button class="restart" onclick="location.reload()">begin again</button>
+</div>
+
+<script>
+// ── STATE
+let imgFile=null,audioFile=null,audioUrlVal=null;
+let audioEl=null,audioCtx=null,analyser=null,source=null;
+let imgBitmap=null,playing=false,ended=false;
+let startMs=0,duration=180,animId=null,currentPhaseIdx=-1;
+
+// Smoothed audio values
+let smoothPitch=0,smoothEnergy=0,smoothTimbre=0,smoothMemory=0;
+
+// ── CANVASES
+const imgC=document.getElementById('imgC'),iCtx=imgC.getContext('2d');
+const ovC=document.getElementById('ovC'),oCtx=ovC.getContext('2d');
+const colC=document.getElementById('colC'),cCtx=colC.getContext('2d');
+const neuC=document.getElementById('neuC'),nCtx=neuC.getContext('2d');
+
+// ── PHASES — mapped to music properties
+const phases=[
+  {at:0,    name:'observation',    word:'',              sci:''},
+  {at:0.06, name:'detection',      word:'memory',        sci:'The hippocampus begins cross-referencing this image with stored emotional signatures. High-frequency sounds activate the amygdala first.'},
+  {at:0.20, name:'activation',     word:'feeling',       sci:'Dopamine releases before the emotional peak arrives. The brain anticipates beauty — pitch variations directly modulate this response.'},
+  {at:0.36, name:'reconstruction', word:'recognition',   sci:'Music changes not just what you remember — but how the memory emotionally feels. Energy levels reshape the emotional weight of the image.'},
+  {at:0.52, name:'resonance',      word:'acceptance',    sci:'The amygdala and prefrontal cortex synchronise. Timbral warmth — the texture of the voice — dissolves fear around loss.'},
+  {at:0.70, name:'dissolution',    word:'stillness',     sci:'Emotional processing slows. The auditory cortex quiets. What remains is pure presence — the image and the silence between notes.'},
+  {at:0.88, name:'silence',        word:'',              sci:''},
+];
+
+// ── NODES
+let nodes=[],conns=[];
+function initNodes(){
+  nodes=[];conns=[];
+  const w=neuC.width,h=neuC.height;
+  for(let i=0;i<40;i++) nodes.push({
+    x:Math.random()*w,y:Math.random()*h,
+    vx:(Math.random()-.5)*.5,vy:(Math.random()-.5)*.5,
+    r:Math.random()*2.5+1,
+    pulse:Math.random()*Math.PI*2,
+    ps:Math.random()*.02+.006,
+    baseX:0,baseY:0
+  });
+  nodes.forEach(n=>{n.baseX=n.x;n.baseY=n.y});
+  for(let i=0;i<40;i++)
+    for(let j=i+1;j<40;j++){
+      const dx=nodes[i].x-nodes[j].x,dy=nodes[i].y-nodes[j].y;
+      if(Math.hypot(dx,dy)<200) conns.push([i,j]);
+    }
+}
+
+// ── RESIZE
+function resize(){
+  [imgC,ovC,colC,neuC].forEach(c=>{c.width=innerWidth;c.height=innerHeight});
+  if(imgBitmap) drawImg();
+  initNodes();
+}
+window.addEventListener('resize',resize);
+
+// ── DRAW IMAGE
+function drawImg(){
+  const w=imgC.width,h=imgC.height;
+  const iw=imgBitmap.width,ih=imgBitmap.height;
+  const sc=Math.max(w/iw,h/ih);
+  const sw=iw*sc,sh=ih*sc,sx=(w-sw)/2,sy=(h-sh)/2;
+  iCtx.filter='grayscale(100%) contrast(1.1) brightness(.85)';
+  iCtx.drawImage(imgBitmap,sx,sy,sw,sh);
+  iCtx.filter='none';
+}
+
+// ── FILE INPUTS
+document.getElementById('imgInp').addEventListener('change',e=>{
+  imgFile=e.target.files[0];
+  if(imgFile){
+    document.getElementById('imgZone').classList.add('filled');
+    const n=document.getElementById('imgName');
+    n.style.display='block';
+    n.textContent=imgFile.name.length>22?imgFile.name.slice(0,20)+'…':imgFile.name;
+    checkReady();
+  }
+});
+document.getElementById('audioInp').addEventListener('change',e=>{
+  audioFile=e.target.files[0];audioUrlVal=null;
+  if(audioFile){
+    document.getElementById('audioZone').classList.add('filled');
+    const n=document.getElementById('audioName');
+    n.style.display='block';
+    n.textContent=audioFile.name.length>22?audioFile.name.slice(0,20)+'…':audioFile.name;
+    document.getElementById('audioUrl').classList.remove('valid');
+    checkReady();
+  }
+});
+document.getElementById('urlBtn').addEventListener('click',()=>{
+  const v=document.getElementById('audioUrl').value.trim();
+  if(v.startsWith('http')){
+    audioUrlVal=v;audioFile=null;
+    document.getElementById('audioUrl').classList.add('valid');
+    document.getElementById('audioZone').classList.remove('filled');
+    checkReady();
+  }
+});
+document.getElementById('audioUrl').addEventListener('keydown',e=>{
+  if(e.key==='Enter') document.getElementById('urlBtn').click();
+});
+
+function checkReady(){
+  const btn=document.getElementById('beginBtn');
+  if(imgFile){btn.disabled=false;btn.classList.add('ready');}
+}
+
+// ── BEGIN
+document.getElementById('beginBtn').addEventListener('click',async()=>{
+  document.getElementById('entry').classList.add('fade-out');
+  imgBitmap=await createImageBitmap(imgFile);
+
+  // Setup audio element
+  audioEl=new Audio();
+  audioEl.crossOrigin='anonymous';
+  if(audioFile) audioEl.src=URL.createObjectURL(audioFile);
+  else if(audioUrlVal) audioEl.src=audioUrlVal;
+
+  setTimeout(async()=>{
+    document.getElementById('entry').style.display='none';
+    const expEl=document.getElementById('exp');
+    expEl.classList.add('active');
+    resize();
+
+    // Try to setup Web Audio API analyser
+    try{
+      audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+      analyser=audioCtx.createAnalyser();
+      analyser.fftSize=2048;
+      analyser.smoothingTimeConstant=0.8;
+      source=audioCtx.createMediaElementSource(audioEl);
+      source.connect(analyser);
+      analyser.connect(audioCtx.destination);
+    }catch(e){console.log('Web Audio API not available');}
+
+    // Play audio
+    try{
+      await audioEl.play();
+      audioEl.addEventListener('ended',endExp);
+    }catch(e){console.log('Audio play failed — running on timer');}
+
+    startMs=Date.now();
+    playing=true;
+    loop();
+
+    // Fallback end
+    setTimeout(endExp,(audioEl.duration||180)*1000+2000);
+  },2500);
+});
+
+// ── AUDIO ANALYSIS
+const freqData=new Uint8Array(1024);
+const timeData=new Uint8Array(1024);
+
+function getAudioMetrics(){
+  if(!analyser) return{pitch:0,energy:0,timbre:0};
+
+  analyser.getByteFrequencyData(freqData);
+  analyser.getByteTimeDomainData(timeData);
+
+  // Energy — overall loudness (RMS)
+  let sum=0;
+  for(let i=0;i<freqData.length;i++) sum+=freqData[i]*freqData[i];
+  const energy=Math.sqrt(sum/freqData.length)/255;
+
+  // Pitch — dominant frequency bin
+  let maxVal=0,maxIdx=0;
+  const pitchEnd=Math.floor(freqData.length*0.4);
+  for(let i=2;i<pitchEnd;i++){
+    if(freqData[i]>maxVal){maxVal=freqData[i];maxIdx=i;}
+  }
+  const pitch=maxIdx/pitchEnd;
+
+  // Timbre — spectral centroid (brightness)
+  let weightedSum=0,totalAmp=0;
+  for(let i=0;i<freqData.length;i++){
+    weightedSum+=i*freqData[i];
+    totalAmp+=freqData[i];
+  }
+  const timbre=totalAmp>0?weightedSum/(totalAmp*freqData.length):0;
+
+  return{pitch,energy,timbre};
+}
+
+// ── MAIN LOOP
+function loop(){
+  if(!playing) return;
+
+  const elapsedSec=(Date.now()-startMs)/1000;
+  const dur=audioEl&&audioEl.duration&&!isNaN(audioEl.duration)?audioEl.duration:180;
+  const progress=Math.min(elapsedSec/dur,1);
+
+  // Get real audio metrics
+  const{pitch,energy,timbre}=getAudioMetrics();
+
+  // Smooth the values
+  const lerp=(a,b,t)=>a+(b-a)*t;
+  smoothPitch=lerp(smoothPitch,pitch,.08);
+  smoothEnergy=lerp(smoothEnergy,energy,.12);
+  smoothTimbre=lerp(smoothTimbre,timbre,.06);
+  // Memory grows with progress + influenced by energy
+  smoothMemory=lerp(smoothMemory,Math.min(1,progress*1.2+smoothEnergy*.2),.04);
+
+  updateUI(progress,elapsedSec);
+  drawOverlay(progress,smoothEnergy);
+  drawColor(progress,smoothPitch,smoothEnergy,smoothTimbre);
+  drawNeural(progress,smoothEnergy,smoothPitch);
+  updateMetrics(smoothPitch,smoothEnergy,smoothTimbre,smoothMemory);
+
+  if(progress<1) animId=requestAnimationFrame(loop);
+}
+
+// ── UI
+function updateUI(p,sec){
+  document.getElementById('prog').style.width=(p*100)+'%';
+  const m=Math.floor(sec/60),s=Math.floor(sec%60);
+  document.getElementById('timeDisp').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+
+  let pi=0;
+  for(let i=0;i<phases.length;i++) if(p>=phases[i].at) pi=i;
+  document.getElementById('phaseDisp').textContent=phases[pi].name;
+
+  if(pi!==currentPhaseIdx){
+    currentPhaseIdx=pi;
+    showWord(phases[pi]);
+  }
+
+  // Show metrics panel after warmup
+  const met=document.getElementById('metrics');
+  if(p>0.05&&p<0.88) met.classList.add('on'); else met.classList.remove('on');
+}
+
+function showWord(ph){
+  const w=document.getElementById('pWord'),s=document.getElementById('pSci');
+  w.classList.remove('on');s.classList.remove('on');
+  setTimeout(()=>{
+    w.textContent=ph.word;s.textContent=ph.sci;
+    if(ph.word){
+      w.classList.add('on');
+      setTimeout(()=>s.classList.add('on'),1000);
+      setTimeout(()=>{w.classList.remove('on');s.classList.remove('on');},9000);
+    }
+  },1500);
+}
+
+// ── OVERLAY (vignette + energy breathing)
+function drawOverlay(p,energy){
+  const w=ovC.width,h=ovC.height;
+  oCtx.clearRect(0,0,w,h);
+  const intensity=0.45+Math.sin(p*Math.PI)*.1+energy*.05;
+  const grad=oCtx.createRadialGradient(w/2,h/2,h*.15,w/2,h/2,h*.95);
+  grad.addColorStop(0,`rgba(6,6,6,0)`);
+  grad.addColorStop(1,`rgba(6,6,6,${intensity})`);
+  oCtx.fillStyle=grad;
+  oCtx.fillRect(0,0,w,h);
+}
+
+// ── COLOR — driven by real pitch, energy, timbre
+// Based on musicolors mapping: pitch→hue, energy→saturation, timbre→brightness
+function drawColor(p,pitch,energy,timbre){
+  // Pitch maps to hue (musicolors: lower pitch = cool blue, higher = warm gold/red)
+  // 0=blue, 0.5=amber, 1=warm red
+  const hue=pitch<0.3?
+    `${Math.round(200+pitch*100)},${Math.round(50+pitch*100)},${Math.round(120-pitch*100)}`:
+    `${Math.round(180+pitch*75)},${Math.round(100+pitch*55)},${Math.round(10+pitch*20)}`;
+
+  // Energy drives opacity/saturation
+  const colorIntensity=Math.sin(p*Math.PI)*0.75*(0.3+energy*0.7);
+  colC.style.opacity=Math.min(colorIntensity,0.85);
+
+  const w=colC.width,h=colC.height;
+  cCtx.clearRect(0,0,w,h);
+
+  // Radial colour wash from centre — timbre affects spread
+  const spread=0.4+timbre*0.4;
+  const grad=cCtx.createRadialGradient(w/2,h/2,0,w/2,h/2,w*spread);
+  grad.addColorStop(0,`rgb(${hue})`);
+  const [r,g,b]=hue.split(',').map(Number);
+  grad.addColorStop(1,`rgb(${Math.round(r*.3)},${Math.round(g*.3)},${Math.round(b*.3)})`);
+  cCtx.fillStyle=grad;
+  cCtx.fillRect(0,0,w,h);
+}
+
+// ── NEURAL — energy drives pulse speed & size, pitch drives connection distance
+function drawNeural(p,energy,pitch){
+  const w=neuC.width,h=neuC.height;
+  nCtx.clearRect(0,0,w,h);
+
+  const intensity=Math.sin(p*Math.PI)*(0.4+energy*0.6);
+  if(intensity<0.02) return;
+
+  // Speed influenced by energy
+  const speed=0.3+energy*1.5;
+
+  nodes.forEach(n=>{
+    n.x+=n.vx*speed;n.y+=n.vy*speed;
+    n.pulse+=n.ps*(1+energy*2);
+    if(n.x<0||n.x>w)n.vx*=-1;
+    if(n.y<0||n.y>h)n.vy*=-1;
+  });
+
+  // Connection distance influenced by pitch
+  const connDist=140+pitch*80;
+  nodes.forEach((n,i)=>{
+    nodes.forEach((m,j)=>{
+      if(j<=i) return;
+      const dx=n.x-m.x,dy=n.y-m.y,d=Math.hypot(dx,dy);
+      if(d<connDist){
+        const a=(1-d/connDist)*intensity*.4;
+        nCtx.beginPath();
+        nCtx.moveTo(n.x,n.y);nCtx.lineTo(m.x,m.y);
+        nCtx.strokeStyle=`rgba(200,130,26,${a})`;
+        nCtx.lineWidth=0.7+energy;
+        nCtx.stroke();
+      }
+    });
+  });
+
+  // Nodes — size driven by energy
+  nodes.forEach(n=>{
+    const pulse=(Math.sin(n.pulse)+1)/2;
+    const size=n.r*(1+pulse*1.5+energy*3);
+    const a=pulse*intensity*(0.5+energy*.5);
+    nCtx.beginPath();
+    nCtx.arc(n.x,n.y,size,0,Math.PI*2);
+    nCtx.fillStyle=`rgba(200,130,26,${a})`;
+    nCtx.fill();
+    if(energy>0.4){
+      nCtx.beginPath();
+      nCtx.arc(n.x,n.y,size*3,0,Math.PI*2);
+      nCtx.fillStyle=`rgba(200,130,26,${a*.12})`;
+      nCtx.fill();
+    }
+  });
+
+  // Detection boxes in middle phases
+  if(p>0.12&&p<0.78){
+    const bi=Math.sin(p*Math.PI);
+    const t=Date.now()/1000;
+    [[.25,.32,130,85],[.6,.52,100,120],[.42,.68,150,75]].forEach(([fx,fy,bw,bh],i)=>{
+      const pulse=(Math.sin(t*.7+i*1.4)+1)/2;
+      const a=pulse*bi*(0.15+energy*.2);
+      nCtx.strokeStyle=`rgba(200,130,26,${a})`;
+      nCtx.lineWidth=.5;
+      const bx=fx*w-bw/2,by=fy*h-bh/2;
+      nCtx.strokeRect(bx,by,bw,bh);
+      const cs=8;
+      nCtx.strokeStyle=`rgba(200,130,26,${a*2.5})`;
+      nCtx.lineWidth=1;
+      // Top left corner
+      nCtx.beginPath();nCtx.moveTo(bx,by+cs);nCtx.lineTo(bx,by);nCtx.lineTo(bx+cs,by);nCtx.stroke();
+      // Top right
+      nCtx.beginPath();nCtx.moveTo(bx+bw-cs,by);nCtx.lineTo(bx+bw,by);nCtx.lineTo(bx+bw,by+cs);nCtx.stroke();
+      // Bottom right
+      nCtx.beginPath();nCtx.moveTo(bx+bw,by+bh-cs);nCtx.lineTo(bx+bw,by+bh);nCtx.lineTo(bx+bw-cs,by+bh);nCtx.stroke();
+    });
+  }
+}
+
+// ── METRICS PANEL
+function updateMetrics(pitch,energy,timbre,memory){
+  document.getElementById('mPitch').style.width=(pitch*100)+'%';
+  document.getElementById('mEnergy').style.width=(energy*100)+'%';
+  document.getElementById('mTimbre').style.width=(timbre*100)+'%';
+  document.getElementById('mMemory').style.width=(memory*100)+'%';
+
+  const hz=audioCtx&&analyser?Math.round(pitch*800)+'hz':'—';
+  document.getElementById('vPitch').textContent=hz;
+  document.getElementById('vEnergy').textContent=energy>0?Math.round(energy*100)+'%':'—';
+  document.getElementById('vTimbre').textContent=timbre>0?(timbre>.6?'bright':timbre>.3?'warm':'dark'):'—';
+  document.getElementById('vMemory').textContent=memory>0?Math.round(memory*100)+'%':'—';
+}
+
+// ── END
+function endExp(){
+  if(ended) return;ended=true;
+  playing=false;
+  cancelAnimationFrame(animId);
+  if(audioEl){audioEl.pause();}
+  if(audioCtx) audioCtx.close();
+
+  document.getElementById('exp').style.transition='opacity 3s ease';
+  document.getElementById('exp').style.opacity=0;
+  setTimeout(()=>document.getElementById('endScr').classList.add('on'),3000);
+}
+</script>
+</body>
+</html>
